@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <string name="Published">Published</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+    <string name="articleImage">ArticleImage</string>
+    <string name="source">Source</string>
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
+    <string name="something_wrong">Ops! Something wrong, please check your connection</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_favorite">Module Title</string>
+    <string name="empty_data">Data is Empty</string>
+    <string name="fab">FloatingActionBar</string>
+</resources>
