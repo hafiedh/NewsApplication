@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.NewsApp"
-        tools:targetApi="m">
+        tools:targetApi="m"
+        tools:ignore="AllowBackup">
         <activity android:name=".detail.DetailActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
