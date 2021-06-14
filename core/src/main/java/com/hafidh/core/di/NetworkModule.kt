@@ -1,5 +1,6 @@
 package com.hafidh.core.di
 
+import com.hafidh.core.BuildConfig
 import com.hafidh.core.data.source.remote.network.ApiService
 import com.hafidh.core.utis.Constans.BASE_URL
 import dagger.Module
@@ -19,12 +20,14 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttp():OkHttpClient{
-        return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .connectTimeout(120,TimeUnit.SECONDS)
-            .readTimeout(120, TimeUnit.SECONDS)
-            .build()
+    fun provideOkHttp(): OkHttpClient {
+        val okhttpClient = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) {
+            okhttpClient.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        }
+        okhttpClient.connectTimeout(120, TimeUnit.SECONDS)
+        okhttpClient.readTimeout(120, TimeUnit.SECONDS)
+        return okhttpClient.build()
     }
 
     @Singleton
