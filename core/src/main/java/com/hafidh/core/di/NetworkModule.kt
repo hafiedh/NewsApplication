@@ -1,5 +1,6 @@
 package com.hafidh.core.di
 
+import com.hafidh.core.BuildConfig
 import com.hafidh.core.data.source.remote.network.ApiService
 import com.hafidh.core.utis.Constans.BASE_URL
 import dagger.Module
@@ -28,12 +29,15 @@ class NetworkModule {
             .add(hostName, "sha256/FEzVOUp4dF3gI0ZVPRJhFbSJVXR+uQmMH65xhs1glH4=")
             .add(hostName, "sha256/Y9mvm0exBk1JoQ57f9Vm28jKo5lFm/woKcVxrYxu80o=")
             .build()
-        return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .connectTimeout(120,TimeUnit.SECONDS)
-            .readTimeout(120, TimeUnit.SECONDS)
-            .certificatePinner(certificatePinner)
-            .build()
+        val okHttpClient = OkHttpClient.Builder()
+            if(BuildConfig.DEBUG){
+                okHttpClient.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            }
+            okHttpClient.connectTimeout(120,TimeUnit.SECONDS)
+            okHttpClient.readTimeout(120, TimeUnit.SECONDS)
+            okHttpClient.certificatePinner(certificatePinner)
+
+        return okHttpClient.build()
     }
 
     @Singleton
