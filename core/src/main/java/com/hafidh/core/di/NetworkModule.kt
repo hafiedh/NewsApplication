@@ -22,7 +22,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttp():OkHttpClient{
+    fun provideOkHttp(): OkHttpClient {
         val hostName = "newsapi.org"
         val certificatePinner = CertificatePinner.Builder()
             .add(hostName, "sha256/c5XTqkOxoXqc60M3HuT9fgmfeexiP2+Q8BD3+6abZYU=")
@@ -30,12 +30,20 @@ class NetworkModule {
             .add(hostName, "sha256/Y9mvm0exBk1JoQ57f9Vm28jKo5lFm/woKcVxrYxu80o=")
             .build()
         val okHttpClient = OkHttpClient.Builder()
-            if(BuildConfig.DEBUG){
-                okHttpClient.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            }
-            okHttpClient.connectTimeout(120,TimeUnit.SECONDS)
-            okHttpClient.readTimeout(120, TimeUnit.SECONDS)
-            okHttpClient.certificatePinner(certificatePinner)
+        val logging = HttpLoggingInterceptor()
+        if (BuildConfig.DEBUG) okHttpClient.addInterceptor(
+            logging.setLevel(
+                HttpLoggingInterceptor.Level.BODY
+            )
+        )
+        else okHttpClient.addInterceptor(
+            logging.setLevel(
+                HttpLoggingInterceptor.Level.BASIC
+            )
+        )
+        okHttpClient.connectTimeout(120, TimeUnit.SECONDS)
+        okHttpClient.readTimeout(120, TimeUnit.SECONDS)
+        okHttpClient.certificatePinner(certificatePinner)
 
         return okHttpClient.build()
     }
